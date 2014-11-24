@@ -1,3 +1,11 @@
+-record(lhttpc_config, {
+          pools=1::pos_integer(),
+          pool_prefix="lhttpc_man_erlcloud"::string(),
+          pool_connection_timeout=30000::non_neg_integer(),
+          pool_max_size=50::pos_integer()
+}).
+-type(httpc_config() :: #lhttpc_config{}).
+
 -record(aws_config, {
           ec2_host="ec2.amazonaws.com"::string(),
           iam_host="iam.amazonaws.com"::string(),
@@ -29,6 +37,7 @@
           secret_access_key::string()|undefined|false,
           security_token=undefined::string()|undefined,
           timeout=10000::timeout(),
-          cloudtrail_raw_result=false::boolean()
+          cloudtrail_raw_result=false::boolean(),
+          httpc_config=#lhttpc_config{}::httpc_config()
          }).
 -type(aws_config() :: #aws_config{}).
