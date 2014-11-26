@@ -19,7 +19,7 @@ request(URL, Method, Hdrs, Body, Timeout, _Config) ->
     PoolIndex = crypto:rand_uniform(0, Pools),
     PoolPreffix = application:get_env(erlcloud, lhttpc_pool_preffix, "lhttpc_man_erlcloud"),
 
-    PoolSuffix = case PoolIndex >= (?LHTTPC_POOLID_PADDING * 10) of
+    PoolSuffix = case (?LHTTPC_POOLID_PADDING =:= 0) orelse (PoolIndex >= math:pow(10, ?LHTTPC_POOLID_PADDING)) of
         true  -> integer_to_list(PoolIndex);
         false ->
             FormatStr = lists:flatten(["~", integer_to_list(?LHTTPC_POOLID_PADDING), "..0B"]),
